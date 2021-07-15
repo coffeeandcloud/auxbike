@@ -1,0 +1,33 @@
+service: auxbike
+
+frameworkVersion: '2'
+
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+
+functions:
+  ridecrawl:
+    handler: src/rides/handler.run
+    environment:
+      NEXTBIKE_URL: "https://maps.nextbike.net/maps/nextbike-live.json?city=178&domains=ag"
+      S3_BUCKET_URI: "auxbike"
+      BIKE_STATE_FOLDER: "data/bikes_status"
+      STATION_STATE_FOLDER: "data/station_status"
+    events:
+      - schedule: cron(*/15 * * * *)
+  
+  stationcrawl:
+    handler: src/stations/handler.run
+    environment:
+      NEXTBIKE_URL: "https://maps.nextbike.net/maps/nextbike-live.json?city=178&domains=ag"
+      S3_BUCKET_URI: "auxbike"
+      FOLDER: "data/stations"
+    events:
+      - schedule: cron(0 0 * * 0)
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline

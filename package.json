@@ -1,0 +1,19 @@
+{
+  "name": "auxbike",
+  "version": "1.0.0",
+  "description": "Example of creating a function that runs as a cron job using the serverless `schedule` event",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.946.0",
+    "axios": "^0.21.1",
+    "csv-stringify": "^5.6.2",
+    "json-2-csv": "^3.14.1"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "serverless-offline": "^7.0.0",
+    "serverless-plugin-typescript": "^1.1.9",
+    "typescript": "^4.3.5"
+  }
+}
