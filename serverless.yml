@@ -7,6 +7,17 @@ provider:
   name: aws
   runtime: nodejs12.x
   lambdaHashingVersion: 20201221
+  stage: dev
+  region: eu-west-1
+  iam:
+    role:
+      name: auxbike-bucket-access
+      statements:
+        - Effect: 'Allow'
+          Resource: 'arn:aws:s3:::auxbike/*'
+          Action: 
+          - 's3:GetObject'
+          - 's3:PutObject'
 
 functions:
   ridecrawl:
@@ -17,7 +28,7 @@ functions:
       BIKE_STATE_FOLDER: "data/bikes_status"
       STATION_STATE_FOLDER: "data/station_status"
     events:
-      - schedule: cron(*/15 * * * *)
+      - schedule: cron(0/15 * * * ? *)
   
   stationcrawl:
     handler: src/stations/handler.run
@@ -26,7 +37,7 @@ functions:
       S3_BUCKET_URI: "auxbike"
       FOLDER: "data/stations"
     events:
-      - schedule: cron(0 0 * * 0)
+      - schedule: cron(0 10 1 * ? *)
 
 plugins:
   - serverless-plugin-typescript
